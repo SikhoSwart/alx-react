@@ -1,40 +1,29 @@
-import React from 'react';
-import './Notifications.css';
-import close_icon from '../assets/close-icon.png';
-import { getLatestNotification } from '../utils/utils';
+import React from "react";
+import "./Notifications.css";
+import NotificationItem from "./NotificationItem";
+import { getLatestNotification } from "../utils/utils";
+import closeButton from "../assets/close-icon.png";
 
-const Notifications = () => {
-  return (
-    <div className='Notifications'>
-      <p>Here is the list of notifications</p>
-      <ul>
-        <li data-priority='default'>New course available</li>
-        <li data-priority='urgent'>New resume available</li>
-        <li data-priority='urgent'>
-          <div
-            dangerouslySetInnerHTML={{ __html: `${getLatestNotification()}` }}
-          ></div>
-        </li>
-      </ul>
-      <button
-        type='button'
-        aria-label='Close'
-        onClick={() => console.log('Close button has been clicked')}
-        style={{
-          display: 'inline-block',
-          position: 'absolute',
-          top: '16px',
-          right: '16px',
-          background: 0,
-          border: 0,
-          outline: 'none',
-          cursor: 'pointer',
+
+export default function Notifications() {
+    return (
+        <div className="Notifications">
+            <button style={{
+                right: 30,
+                border: 'none',
+                position: 'absolute',
+                background: 'transparent',
         }}
-      >
-        <img src={close_icon} alt='' style={{ width: '8px', height: '8px' }} />
-      </button>
-    </div>
-  );
-};
-
-export default Notifications;
+        aria-label="close"
+        onClick={() => console.log('Close button has been clicked')}>
+        <img src={closeButton} alt="close button icon" />
+        </button>
+            <p>Here is the list of notifications</p>
+            <ul>
+                <NotificationItem type="default" value="New course available"/>
+                <NotificationItem type="urgent" value="New resume available"/>
+                <NotificationItem type="urgent" html={{ __html: getLatestNotification() }} />
+            </ul>
+        </div>
+    )
+}
