@@ -20,4 +20,13 @@ describe("<App />", () => {
     expect(wrapper.find(CourseList)).toHaveLength(1);
     expect(wrapper.find(Login)).toHaveLength(0);
   });
+
+  it('logOut', () => {
+    const logOut = jest.fn(() => undefined);
+    const wrapper = shallow(<App logOut={logOut} />);
+    const alert = jest.spyOn(global, 'alert');
+    expect(alert);
+    expect(logOut);
+    jest.restoreAllMocks();
+  });
 });
