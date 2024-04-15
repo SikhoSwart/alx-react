@@ -14,15 +14,26 @@ const NotificationItem = React.memo(function NotificationItem({
   let typeStyle = css(type === "urgent" ? styles.urgent : styles.default);
 
   if (value) {
-    listItem = (
-      <li
-        className={typeStyle}
-        data-notification-type={type}
-        onClick={() => markAsRead(id)}
-      >
-        {value}
-      </li>
-    );
+    if (type === "noNotifications") {
+      listItem = (
+        <li
+          className={css(styles.noNotifications)}
+          data-notification-type={type}
+        >
+          {value}
+        </li>
+      );
+    } else {
+      listItem = (
+        <li
+          className={typeStyle}
+          data-notification-type={type}
+          onClick={() => markAsRead(id)}
+        >
+          {value}
+        </li>
+      );
+    }
   } else {
     listItem = (
       <li
@@ -52,7 +63,7 @@ NotificationItem.propTypes = {
     __html: PropTypes.string,
   }),
   markAsRead: PropTypes.func,
-  id: PropTypes.number,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 const screenSize = {
@@ -69,11 +80,22 @@ const listItemSmall = {
 const styles = StyleSheet.create({
   default: {
     color: "blue",
+    ":hover": {
+      cursor: "pointer",
+    },
     [screenSize.small]: listItemSmall,
   },
 
   urgent: {
     color: "red",
+    ":hover": {
+      cursor: "pointer",
+    },
+    [screenSize.small]: listItemSmall,
+  },
+
+  noNotifications: {
+    color: "black",
     [screenSize.small]: listItemSmall,
   },
 });
